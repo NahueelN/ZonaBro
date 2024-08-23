@@ -23,7 +23,6 @@ class RegisterForm(FlaskForm):
     ])
 
     def validateEmail(self, email):
-        # Validar el formato del correo electrónico usando una expresión regular
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_regex, email.data):
             raise ValidationError('El correo electrónico no es válido')
@@ -40,7 +39,6 @@ class UserForm(FlaskForm):
     ])
 
     def validate_correo(self, email):
-        # Validar el formato del correo electrónico usando una expresión regular
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_regex, email.data):
             raise ValidationError('El correo electrónico no es válido')

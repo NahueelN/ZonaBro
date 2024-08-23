@@ -2,7 +2,7 @@ from flask import Flask
 from config import config
 from flask_login import LoginManager
 from .controllers.userController import getUserById
-from .models.user import User
+from .models.entities.user import User
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -25,7 +25,7 @@ login_manager_app.login_view = 'auth.login'
 
 @login_manager_app.user_loader
 def load_user(id):
-    user_data = getUserById(id)  # Esta función debe devolver un diccionario
+    user_data = getUserById(id) 
     if user_data:
         return User(
             id=user_data['id'],

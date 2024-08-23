@@ -1,6 +1,5 @@
 from ..dataBase.contactDB import fetchAll, fetchOne, execute
 from typing import List, Dict, Any, Optional
-from werkzeug.utils import secure_filename
 import os
 
 def getAllProperties() -> List[Dict[str, Any]]:
@@ -24,7 +23,6 @@ def updateProperty(property_id: int, address: str, description: str, images: Lis
     query = 'UPDATE properties SET address = %s, description = %s, price = %s WHERE id = %s'
     execute(query, [address, description, price, property_id])
     
-    # Update images in the property_images table
     deleteImagesByPropertyId(property_id)
     for image in images:
         addImage(property_id, image)
