@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+<head>
+    {% block customCSS %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+    {% if properties is not none %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/catalog.css') }}">
+    {% endif %}
+    {% endblock %}
+    {% block title %}
+    {{ super() }}
+    Profile
+    {% endblock %}
+</head>
+
+{% block content %}
+<div class="container mt-4">
+    <div class="profile-card mb-4">
+        <h2>Perfil</h2>
+        <p><strong>Nombre:</strong> {{ current_user.name }}</p>
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-logout">Cerrar Sesión</a>
+    </div>
+
+    {% include 'catalog.html' %}
+   
+</div>
+{% endblock %}

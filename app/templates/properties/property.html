@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+<head>
+    {% block customCSS %}
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css') }}">
+    {% endblock %}
+    {% block title %}
+    {{ super() }} Property Details
+    {% endblock %}
+</head>
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Propiedad en alquiler</h1>
+    <div class="product-card">
+        <div class="image-info-container">
+            <div id="carousel-{{ property.id }}" class="carousel slide">
+                <div class="carousel-inner">
+                    {% if propertyImages %}
+                        {% for image in propertyImages %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="{{ url_for('static', filename='images/property' ~ property.id ~ '/' ~ image.image_url) }}" class="d-block w-100" alt="Product Image" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{ url_for('static', filename='images/property' ~ property.id ~ '/' ~ image.image_url) }}">
+                            </div>
+                        {% endfor %}
+                    {% else %}  
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='images/default.jpg') }}" class="d-block w-100" alt="Default Image" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{ url_for('static', filename='images/default.jpg') }}">
+                        </div>
+                    {% endif %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="info-product">
+                <h2 class="address">{{ property.address }}</h2>
+                <p class="price">${{ property.price }}</p>
+                <p class="attributes">
+                    {{ property.rooms }} ambientes   | {{ property.squareMeters }} m²
+                </p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="description-form-container">
+            <div class="description-product">
+                <p class="description">{{ property.description }}</p>
+            </div>
+            <div class="form-container">
+                <h2>Mensaje al anunciante</h2>
+                <form action="/product/contact/{{ property.id }}" method="POST">
+                    <div class="form-group">
+                        <label for="email">Tu email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="question">Pregunta:</label>
+                        <textarea id="question" name="question" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">enviar</button>
+                    </div>
+                    {% if message %}
+                        <div class="message">{{ message }}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div id="modalCarousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        {% if propertyImages %}
+                            {% for image in propertyImages %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{ url_for('static', filename='images/property' ~ property.id ~ '/' ~ image.image_url) }}" class="d-block w-100" alt="Product Image">
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="carousel-item active">
+                                <img src="{{ url_for('static', filename='images/default.jpg') }}" class="d-block w-100" alt="Default Image">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/product-detail.js') }}"></script>
+
+{% endblock %}

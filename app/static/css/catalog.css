@@ -1,0 +1,175 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the main content */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Sorting section styles */
+.sort-section {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sort-section label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.sort-section select {
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.sort-section button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sort-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Property card styles */
+.property-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+/* Carrusel de Imagenes */
+.carousel {
+    position: relative;
+    width: 300px; /* Ajusta el ancho del carrusel */
+    height: 200px; /* Ajusta la altura del carrusel */
+    overflow: hidden;
+}
+
+.carousel-inner {
+    height: 100%; /* Ocupa toda la altura del contenedor */
+}
+
+.carousel-item {
+    height: 100%; /* Ocupa toda la altura del contenedor */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para cubrir el área sin deformarse */
+    display: block; /* Asegura que las imágenes se comporten como bloques */
+}
+
+/* Image container */
+.property-image {
+    flex: 0 0 300px; /* Ajusta el ancho del contenedor de imagen */
+    padding: 0; /* Elimina el padding */
+}
+
+/* Description container */
+.property-details {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.property-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.property-price {
+    font-size: 1.2em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.property-attributes {
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+.property-description {
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+/* Property actions (edit and delete buttons) */
+.property-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Ensures buttons are at the bottom */
+}
+
+.property-actions .btn {
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+/* Button styles */
+.btn-info {
+    display: inline-block;
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-info:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #000000;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}

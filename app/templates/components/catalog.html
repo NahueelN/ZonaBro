@@ -1,0 +1,48 @@
+{% for property in properties %}
+<div class="container">
+    <div class="property-card">
+        <div id="carousel-{{ property.id }}" class="carousel slide">
+            <div class="carousel-inner">
+                {% set images = propertyImages[property.id] %}
+                {% if images %}
+                    {% for image in images %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ url_for('static', filename='images/property' ~ property.id ~ '/' ~ image.image_url) }}" class="d-block w-100" alt="Property Image">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename='images/default.jpg') }}" class="d-block w-100" alt="Default Image">
+                    </div>
+                {% endif %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="property-details">
+            <div class="property-title">{{ property.address }}</div>
+            <div class="property-price">${{ property.price }}</div>
+            <div class="property-attributes">
+                <span>{{ property.rooms }} amb</span> | 
+                <span>{{ property.squareMeters }} m² tot.</span>
+            </div>
+            <div class="property-actions">
+                <a href="/property/{{ property.id }}" class="btn btn-info">Más Información</a>
+                
+                {% if profile %}
+                <form action="/property/delete/{{ property.id }}" method="post" class="d-inline" onsubmit="return confirm('¿Está seguro de que desea eliminar esta propiedad?');">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+                <a href="/property/alter/{{ property.id }}" class="btn btn-warning">Editar</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

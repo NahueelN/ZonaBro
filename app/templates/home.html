@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+<head>
+    {% block customCSS %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/catalog.css') }}">
+    {% endblock %}
+    {% block title %}
+    {{ super() }}
+    Catalog
+    {% endblock %}
+</head>
+
+{% block content %}
+<div class="sort-section">
+    <form action="/sort" method="post">
+        <label for="sort">Sort by price:</label>
+        <select name="sort" id="sort">
+            <option value="asc">Low to high</option>
+            <option value="desc">High to low</option>
+        </select>
+        <button type="submit">Sort</button>
+    </form>
+</div>
+
+{% include 'catalog.html' %}
+
+{% endblock %}

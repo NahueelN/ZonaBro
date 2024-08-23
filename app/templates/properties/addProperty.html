@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ super() }} - Agregar Producto
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Agregar Producto</h1>
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for field, errors in form.errors.items() %}
+            {% for error in errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3 row">
+            <div class="col-md-8">
+                {{ form.street.label(class="form-label") }}
+                {{ form.street(class="form-control", placeholder="Ingrese la calle de la propiedad") }}
+            </div>
+            <div class="col-md-4">
+                {{ form.streetNumber.label(class="form-label") }}
+                {{ form.streetNumber(class="form-control", placeholder="Ingrese la altura de la propiedad") }}
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ form.city.label(class="form-label") }}
+            {{ form.city(class="form-control", placeholder="Ingrese la ciudad de la propiedad") }}
+        </div>
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", placeholder="Ingrese una descripción de la propiedad") }}
+        </div>
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control", placeholder="Ingrese el precio de la propiedad") }}
+        </div>
+        <div class="mb-3">
+            {{ form.rooms.label(class="form-label") }}
+            {{ form.rooms(class="form-control", placeholder="Ingrese la cantidad de habitaciones") }}
+        </div>
+        <div class="mb-3">
+            {{ form.squareMeters.label(class="form-label") }}
+            {{ form.squareMeters(class="form-control", placeholder="Ingrese los metros cuadrados") }}
+        </div>
+        <div class="mb-3">
+            {{ form.image.label(class="form-label") }}
+            {{ form.image(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Agregar Producto</button>
+    </form>
+</div>
+{% endblock %}
