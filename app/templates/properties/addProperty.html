@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ super() }} - Agregar Producto
+    {{ super() }} - {{ 'Modificar Producto' if property else 'Agregar Producto' }}
 {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Agregar Producto</h1>
+    <h1 class="mb-4">{{ 'Modificar Producto' if property else 'Agregar Producto' }}</h1>
     {% if form.errors %}
     <div class="alert alert-danger" role="alert">
         {% for field, errors in form.errors.items() %}
@@ -53,7 +53,7 @@
             {{ form.image.label(class="form-label") }}
             {{ form.image(class="form-control") }}
         </div>
-        <button type="submit" class="btn btn-primary w-100">Agregar Producto</button>
+        <button type="submit" class="btn btn-primary w-100">{{ 'Actualizar Producto' if property else 'Agregar Producto' }}</button>
     </form>
 </div>
 {% endblock %}
