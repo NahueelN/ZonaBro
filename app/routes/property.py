@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,flash, redirect,request
-from ..controllers.propertyController import getPropertyById,addImage,updateProperty,addProperty,deleteProperty,getImagesByPropertyId
+from ..controllers.propertyController import getPropertyById,addImage,updateProperty,addProperty,deleteProperty,getImagesByPropertyId,addAddress,getAddressByPropertyId
 from flask_login import login_required, current_user
 from ..models.formProperty import PropertyForm
 
@@ -10,7 +10,9 @@ def property(id):
     property=getPropertyById(id)
     propertyImages={}
     propertyImages=getImagesByPropertyId(id)
-    return render_template('properties/property.html', property=property,propertyImages=propertyImages)
+    propertyAddress=getAddressByPropertyId(id)
+    print(propertyAddress)
+    return render_template('properties/property.html', property=property,propertyImages=propertyImages,propertyAddress=propertyAddress)
 
 @property_bp.route('/add', methods=['GET', 'POST'])
 @property_bp.route('/alter/<int:propertyId>', methods=['GET', 'POST'])
@@ -27,28 +29,28 @@ def manageProperty(propertyId=None):
     form = PropertyForm(obj=property)
 
     if form.validate_on_submit():
-        street = form.street.data
-        streetNumber = form.streetNumber.data
+        street_name = form.street.data
+        street_number = form.streetNumber.data
         city = form.city.data
         description = form.description.data
         price = form.price.data
         images = request.files.getlist('image')
         user = current_user.id
-        address = f"{streetNumber} {street}, {city}"
         rooms = form.rooms.data
         squareMeters = form.squareMeters.data
         
         try:
             if propertyId:
-                updateProperty(propertyId, address, description, price,rooms,squareMeters)
+                updateProperty(propertyId, description, price,rooms,squareMeters)
+                addAddress(propertyId,street_name,street_number,city)
                 flash('Producto modificado exitosamente', 'success')
                 for image in images:
                     if image:
                         addImage(propertyId, image)
                 return redirect('/auth/profile')
             else:
-                propertyId = addProperty(address, description, price, user,rooms,squareMeters)
-                print(propertyId)
+                propertyId = addProperty(description, price,user,rooms,squareMeters)
+                addAddress(propertyId,street_name,street_number,city)
                 flash('Producto agregado exitosamente', 'success')
                 for image in images:
                     if image:

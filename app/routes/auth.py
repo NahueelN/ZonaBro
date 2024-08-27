@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, flash,url_for
 from ..controllers.userController import loginn,getUserByEmail, addUser
-from ..controllers.propertyController import getPropertiesByUserId,getImagesByPropertyId
+from ..controllers.propertyController import getPropertiesByUserId,getImagesByPropertyId,getAddressByPropertyId
 from app.models.formUser import UserForm,RegisterForm
 from flask_login import login_user, logout_user,login_required,current_user
 
@@ -49,7 +49,13 @@ def perfil():
     for property in properties:
         images = getImagesByPropertyId(property['id'])
         propertyImages[property['id']] = images
-    return render_template('users/profile.html',properties=properties,propertyImages=propertyImages,profile=profile)
+
+    propertyAddress={}
+    for property in properties:
+        address = getAddressByPropertyId(property['id'])
+        propertyAddress[property['id']] = address
+    
+    return render_template('users/profile.html',properties=properties,propertyImages=propertyImages,profile=profile,propertyAddress=propertyAddress)
 
 @auth_bp.route('/logout')
 def logout():

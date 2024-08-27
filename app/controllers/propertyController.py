@@ -14,14 +14,14 @@ def getPropertiesByUserId(user_id: int) -> List[Dict[str, Any]]:
     query = 'SELECT * FROM properties WHERE user_id = %s'
     return fetchAll(query, [user_id])
 
-def addProperty(address: str, description: str, price: int, user_id: int,rooms: int,squareMeters: int) -> int:
-    query = 'INSERT INTO properties (address, description, price, user_id,rooms,squareMeters) VALUES (%s, %s, %s, %s, %s, %s)'
-    property_id=execute(query, [address, description, price, user_id,rooms,squareMeters])   
+def addProperty( description: str, price: int, user_id: int,rooms: int,squareMeters: int) -> int:
+    query = 'INSERT INTO properties (description, price, user_id,rooms,squareMeters) VALUES ( %s, %s, %s, %s, %s)'
+    property_id=execute(query, [ description, price, user_id,rooms,squareMeters])   
     return property_id
 
-def updateProperty(property_id: int, address: str, description: str, images: List[str], price: int,rooms: int,squareMeters: int) -> None:
-    query = 'UPDATE properties SET address = %s, description = %s, price = %s WHERE id = %s'
-    execute(query, [address, description, price, property_id])
+def updateProperty(property_id: int, description: str, images: List[str], price: int,rooms: int,squareMeters: int) -> None:
+    query = 'UPDATE properties SET description = %s, price = %s,rooms=%s,squareMeters=%s WHERE id = %s'
+    execute(query, [ description, price,rooms,squareMeters, property_id])
     
     deleteImagesByPropertyId(property_id)
     for image in images:
@@ -43,14 +43,22 @@ def addImage(property_id: int, image_file) -> None:
     
     image_url = image_filename
     
-    query = 'INSERT INTO propertyImages (property_id, image_url) VALUES (%s, %s)'
+    query = 'INSERT INTO property_images (property_id, image_url) VALUES (%s, %s)'
     execute(query, [property_id, image_url])
 
 
 def deleteImagesByPropertyId(property_id: int) -> None:
-    query = 'DELETE FROM propertyImages WHERE property_id = %s'
+    query = 'DELETE FROM property_images WHERE property_id = %s'
     execute(query, [property_id])
 
 def getImagesByPropertyId(property_id: int) -> List[Dict[str, Any]]:
-    query = 'SELECT image_url FROM propertyimages WHERE property_id = %s'
+    query = 'SELECT image_url FROM property_images WHERE property_id = %s'
     return fetchAll(query, [property_id])
+
+def addAddress(property_id: int,street_name: int ,street_number:str, city:str) -> None:
+    query = 'INSERT INTO property_address (street_name,street_number,city,property_id) VALUES (%s, %s, %s, %s)'
+    execute(query,[street_name,street_number,city,property_id])
+
+def getAddressByPropertyId(property_id: int):
+    query = 'SELECT * FROM property_address WHERE property_id = %s'
+    return fetchOne(query, [property_id])

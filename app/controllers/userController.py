@@ -1,6 +1,6 @@
 from ..dataBase.contactDB import fetchAll, fetchOne, execute
 from typing import List, Dict, Any, Optional
-from app.models.user import User
+from app.models.entities.user import User
 
 def getAllUser() -> List[Dict[str, Any]]:
     query = 'SELECT * FROM user'
