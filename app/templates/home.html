@@ -5,12 +5,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/catalog.css') }}">
     {% endblock %}
     {% block title %}
-    {{ super() }}
-    Catalog
+    {{ super() }} Home
     {% endblock %}
 </head>
 
 {% block content %}
-{% include '/components/catalog.html' %}
+<div class="container mt-4">
+    <h1 class="mb-4">Propiedades en alquiler</h1>
 
+    <!-- Sorting Form -->
+    <div class="order mb-4">
+        <form action="/home" method="GET">
+            <label for="order">Ordenar:</label>
+            <select name="order" id="order">
+                <option value="price_asc" {% if request.args.get('order') == 'price_asc' %}selected{% endif %}>Menor precio a mayor</option>
+                <option value="price_desc" {% if request.args.get('order') == 'price_desc' %}selected{% endif %}>Mayor precio a menor</option>
+                <option value="date_asc" {% if request.args.get('order') == 'date_asc' %}selected{% endif %}>Mas aniguos</option>
+                <option value="date_desc" {% if request.args.get('order') == 'date_desc' %}selected{% endif %}>Mas nuevos</option>
+            </select>
+            <button type="submit">Sort</button>
+        </form>
+    </div>
+
+    <!-- Include catalog.html here -->
+    {% include 'components/catalog.html' %}
+</div>
 {% endblock %}

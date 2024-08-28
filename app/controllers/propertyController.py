@@ -1,4 +1,5 @@
 from ..dataBase.contactDB import fetchAll, fetchOne, execute
+from datetime import datetime
 from typing import List, Dict, Any, Optional
 from ..untils.sendMail import sendEmail
 import os
@@ -15,9 +16,14 @@ def getPropertiesByUserId(user_id: int) -> List[Dict[str, Any]]:
     query = 'SELECT * FROM properties WHERE user_id = %s'
     return fetchAll(query, [user_id])
 
-def addProperty( description: str, price: int, user_id: int,rooms: int,squareMeters: int) -> int:
-    query = 'INSERT INTO properties (description, price, user_id,rooms,squareMeters) VALUES ( %s, %s, %s, %s, %s)'
-    property_id=execute(query, [ description, price, user_id,rooms,squareMeters])   
+def addProperty(description: str, price: int, user_id: int, rooms: int, squareMeters: int) -> int:
+    today = datetime.now().strftime('%Y-%m-%d')  # Formato yyyy-mm-dd para la base de datos
+    query = '''
+        INSERT INTO properties (description, price, user_id, rooms, squareMeters, date_added)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    '''
+    parameters = [description, price, user_id, rooms, squareMeters, today]
+    property_id = execute(query, parameters)
     return property_id
 
 def updateProperty(property_id: int, description: str, images: List[str], price: int,rooms: int,squareMeters: int) -> None:
@@ -29,8 +35,22 @@ def updateProperty(property_id: int, description: str, images: List[str], price:
         addImage(property_id, image)
 
 def deleteProperty(property_id: int) -> None:
+    # Elimina imágenes relacionadas
     deleteImagesByPropertyId(property_id)
+
+    # Elimina la dirección de la propiedad
+    deleteAddressByPropertyId(property_id)
+
+    # Elimina el registro principal
     query = 'DELETE FROM properties WHERE id = %s'
+    execute(query, [property_id])
+
+def deleteAddressByPropertyId(property_id: int) -> None:
+    query = 'DELETE FROM property_address WHERE property_id = %s'
+    execute(query, [property_id])
+
+def deleteImagesByPropertyId(property_id: int) -> None:
+    query = 'DELETE FROM property_images WHERE property_id = %s'
     execute(query, [property_id])
 
 def addImage(property_id: int, image_file) -> None:
@@ -47,10 +67,6 @@ def addImage(property_id: int, image_file) -> None:
     query = 'INSERT INTO property_images (property_id, image_url) VALUES (%s, %s)'
     execute(query, [property_id, image_url])
 
-
-def deleteImagesByPropertyId(property_id: int) -> None:
-    query = 'DELETE FROM property_images WHERE property_id = %s'
-    execute(query, [property_id])
 
 def getImagesByPropertyId(property_id: int) -> List[Dict[str, Any]]:
     query = 'SELECT image_url FROM property_images WHERE property_id = %s'
@@ -125,3 +141,19 @@ def sendSellerInquiry(emailRequest,question,property):
         """%(user.get("name"),address.get("street_name"),address.get("street_number"),address.get("city"),question,emailRequest)
         email=user.get("email")
         sendEmail(email,subject,body)
+
+
+def getPropertyByOrder(order_by=None) -> list:
+    if order_by == 'price_asc':
+        order = 'price ASC'
+    elif order_by == 'price_desc':
+        order = 'price DESC'
+    elif order_by == 'date_asc':
+        order = 'date_added ASC'
+    elif order_by == 'date_desc':
+        order = 'date_added DESC'
+    else:
+        return None  # Orden por defecto
+    
+    query = f"SELECT * FROM properties ORDER BY {order}"
+    return fetchAll(query)

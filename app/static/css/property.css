@@ -1,3 +1,6 @@
+/* property.css */
+
+/* Estilo general para el body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -5,6 +8,7 @@ body {
     padding: 0;
 }
 
+/* Contenedor general para los elementos */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -12,6 +16,7 @@ body {
     padding: 20px;
 }
 
+/* Estilo para las tarjetas de producto */
 .product-card {
     background-color: #ffffff;
     border-radius: 8px;
@@ -21,68 +26,56 @@ body {
     padding: 20px;
 }
 
+/* Contenedor para la imagen y la información del producto */
 .image-info-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
 }
 
-.carousel-inner {
+.carousel {
     position: relative;
-    height: 400px;
+    width: 800px; 
+    height: 600px;
     overflow: hidden;
 }
 
+.carousel-inner {
+    height: 100%;
+}
+
 .carousel-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
 }
 
 .carousel-item img {
-    width: auto;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-
-.carousel-control-prev, .carousel-control-next {
-    width: 5%;
-}
-
-.carousel-control-prev-icon, .carousel-control-next-icon {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23000' d='M5.354 1.646a.5.5 0 0 0 0 .708L7.207 4l-1.853 1.646a.5.5 0 1 0 .707.707l2.5-2.5a.5.5 0 0 0 0-.707l-2.5-2.5a.5.5 0 0 0-.707 0z'/%3E%3C/svg%3E");
-}
-
-.carousel-control-next-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23000' d='M2.646 1.646a.5.5 0 0 1 0 .708L4.793 4 2.646 5.646a.5.5 0 1 1-.707-.707l1.853-1.646-1.853-1.646a.5.5 0 0 1 .707-.707l2.5 2.5a.5.5 0 0 1 0 .707l-2.5 2.5a.5.5 0 0 1-.707-.707z'/%3E%3C/svg%3E");
-}
-
+/* Estilo para la información del producto */
 .info-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 20px;
 }
 
 .address {
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .price {
-    font-size: 1.5em;
+    font-size: 1.8em;
     color: #007bff;
 }
 
 .attributes {
     margin-top: 10px;
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
 .divider {
@@ -97,7 +90,7 @@ body {
 }
 
 .description-product {
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #333;
 }
 
@@ -144,33 +137,21 @@ body {
     font-weight: bold;
 }
 
+/* Estilo para el contenido del modal */
 .modal-content {
     border: none;
     border-radius: 0;
 }
 
+/* Estilo para el cuerpo del modal */
 .modal-body {
     padding: 0;
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.carousel-inner {
-    height: 80vh;
-}
-
-.carousel-item img {
-    width: auto;
-    max-height: 100%;
+/* Estilo para las imágenes dentro del modal */
+.modal-content img {
+    max-width: 90vw;
+    max-height: 90vh;
     object-fit: contain;
-}
-
-.carousel-control-prev, .carousel-control-next {
-    width: 5%;
-}
-
-.carousel-control-prev-icon, .carousel-control-next-icon {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
 }
