@@ -1,6 +1,3 @@
-/* property.css */
-
-/* Estilo general para el body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -8,7 +5,6 @@ body {
     padding: 0;
 }
 
-/* Contenedor general para los elementos */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -16,7 +12,6 @@ body {
     padding: 20px;
 }
 
-/* Estilo para las tarjetas de producto */
 .product-card {
     background-color: #ffffff;
     border-radius: 8px;
@@ -24,9 +19,14 @@ body {
     overflow: hidden;
     margin-bottom: 20px;
     padding: 20px;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 
-/* Contenedor para la imagen y la información del producto */
+.product-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
 .image-info-container {
     display: flex;
     flex-direction: row;
@@ -35,7 +35,7 @@ body {
 
 .carousel {
     position: relative;
-    width: 800px; 
+    width: 100%;
     height: 600px;
     overflow: hidden;
 }
@@ -54,7 +54,7 @@ body {
     object-fit: cover;
     display: block;
 }
-/* Estilo para la información del producto */
+
 .info-product {
     display: flex;
     flex-direction: column;
@@ -137,21 +137,67 @@ body {
     font-weight: bold;
 }
 
-/* Estilo para el contenido del modal */
 .modal-content {
     border: none;
     border-radius: 0;
 }
 
-/* Estilo para el cuerpo del modal */
 .modal-body {
     padding: 0;
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Estilo para las imágenes dentro del modal */
 .modal-content img {
     max-width: 90vw;
     max-height: 90vh;
     object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+#map {
+    height: 500px;
+    border: 2px solid red;
+}
+
+@media (max-width: 768px) {
+    .image-info-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carousel {
+        height: 300px;
+    }
+
+    .carousel-item img {
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .info-product {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .address {
+        font-size: 1.5em;
+    }
+
+    .price {
+        font-size: 1.4em;
+    }
+
+    .attributes {
+        font-size: 1.2em;
+    }
+
+    .description-product {
+        font-size: 1.2em;
+    }
+
+    .form-container {
+        padding: 10px;
+    }
 }

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ super() }} - {{ 'Modificar Producto' if property else 'Agregar Producto' }}
+    {{ super() }} - {{ 'Actualizar alquiler de propiedad' if property else 'Agregar alquiler de propiedad' }}
 {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">{{ 'Modificar Producto' if property else 'Agregar Producto' }}</h1>
+    <h1 class="mb-4">{{ 'Actualizar alquiler de propiedad' if property else 'Agregar alquiler de propiedad' }}</h1>
     {% if form.errors %}
     <div class="alert alert-danger" role="alert">
         {% for field, errors in form.errors.items() %}
@@ -51,9 +51,9 @@
         </div>
         <div class="mb-3">
             {{ form.image.label(class="form-label") }}
-            {{ form.image(class="form-control") }}
+            {{ form.image(class="form-control", multiple=True) }} 
         </div>
-        <button type="submit" class="btn btn-primary w-100">{{ 'Actualizar Producto' if property else 'Agregar Producto' }}</button>
+        <button type="submit" class="btn btn-primary w-100">{{ 'Actualizar alquiler de propiedad' if property else 'Agregar alquiler de propiedad' }}</button>
     </form>
 </div>
 {% endblock %}

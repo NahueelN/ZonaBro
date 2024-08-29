@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, FileField, IntegerField
+from wtforms import StringField, FileField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
 
 class PropertyForm(FlaskForm):
@@ -19,16 +19,16 @@ class PropertyForm(FlaskForm):
         DataRequired(message='La ciudad es obligatoria'),
         Length(max=255, message='La ciudad no puede exceder los 255 caracteres')
     ])
-    price = FloatField('Precio', validators=[
+    price = IntegerField('Precio', validators=[
         DataRequired(message='El precio es obligatorio'),
-        NumberRange(min=0.01, message='El precio debe ser mayor a 0')
+        NumberRange(min=0, message='El precio debe ser mayor o igual a 0')
     ])
     rooms = IntegerField('Habitaciones', validators=[
         DataRequired(message='La cantidad de habitaciones es obligatoria'),
-        NumberRange(min=1, message='La cantidad de habitaciones debe ser mayor a 0')
+        NumberRange(min=0, message='La cantidad de habitaciones debe ser mayor a 0')
     ])
-    squareMeters = FloatField('Metros Cuadrados', validators=[
+    squareMeters = IntegerField('Metros Cuadrados', validators=[
         DataRequired(message='Los metros cuadrados son obligatorios'),
-        NumberRange(min=0.01, message='Los metros cuadrados deben ser mayores a 0')
+        NumberRange(min=1, message='Los metros cuadrados deben ser mayores a 0')
     ])
     image = FileField('Imagenes', validators=[], render_kw={"multiple": True})

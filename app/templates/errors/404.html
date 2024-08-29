@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Página No Encontrada
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="error-container">
+                <h1 class="display-1 text-danger">404</h1>
+                <h2 class="mb-4">Página No Encontrada</h2>
+                <p class="lead">Lo sentimos, la página que estás buscando no existe.</p>
+                <p class="mt-4 text-muted">Es posible que haya sido movida, renombrada o eliminada.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}

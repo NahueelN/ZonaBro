@@ -62,3 +62,6 @@ def order():
         context['propertyAddress'][property_id] = getAddressByPropertyId(property_id)
 
     return render_template('home.html', **context)
+
+
+

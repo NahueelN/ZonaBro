@@ -11,11 +11,12 @@ def create_app(config_name='development'):
 
     login_manager_app.init_app(app)
     
-    from app.routes import home_bp,property_bp,auth_bp
+    from app.routes import home_bp,property_bp,auth_bp,error_bp
 
     app.register_blueprint(home_bp, url_prefix="/")
     app.register_blueprint(property_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(error_bp, url_prefix='/errors')
     
     return app
 
@@ -34,3 +35,4 @@ def load_user(id):
             name=user_data['name']
         )
     return None
+

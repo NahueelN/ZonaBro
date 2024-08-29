@@ -16,32 +16,32 @@ def getPropertiesByUserId(user_id: int) -> List[Dict[str, Any]]:
     query = 'SELECT * FROM properties WHERE user_id = %s'
     return fetchAll(query, [user_id])
 
-def addProperty(description: str, price: int, user_id: int, rooms: int, squareMeters: int) -> int:
-    today = datetime.now().strftime('%Y-%m-%d')  # Formato yyyy-mm-dd para la base de datos
+def addPropertyDB(description: str,images, price: int, user_id: int, rooms: int, squareMeters: int) -> int:
+    today = datetime.now().strftime('%Y-%m-%d') 
     query = '''
         INSERT INTO properties (description, price, user_id, rooms, squareMeters, date_added)
         VALUES (%s, %s, %s, %s, %s, %s)
     '''
     parameters = [description, price, user_id, rooms, squareMeters, today]
     property_id = execute(query, parameters)
+    for image in images:
+        if image:
+            addImage(property_id, image)
     return property_id
 
-def updateProperty(property_id: int, description: str, images: List[str], price: int,rooms: int,squareMeters: int) -> None:
+def updateProperty(property_id: int, description: str,images, price: int,rooms: int,squareMeters: int) -> None:
     query = 'UPDATE properties SET description = %s, price = %s,rooms=%s,squareMeters=%s WHERE id = %s'
-    execute(query, [ description, price,rooms,squareMeters, property_id])
-    
+    print("aca")
     deleteImagesByPropertyId(property_id)
+    
     for image in images:
-        addImage(property_id, image)
+        if image:
+            addImage(property_id, image)
+    execute(query, [ description, price,rooms,squareMeters, property_id])
 
 def deleteProperty(property_id: int) -> None:
-    # Elimina imágenes relacionadas
     deleteImagesByPropertyId(property_id)
-
-    # Elimina la dirección de la propiedad
     deleteAddressByPropertyId(property_id)
-
-    # Elimina el registro principal
     query = 'DELETE FROM properties WHERE id = %s'
     execute(query, [property_id])
 
@@ -50,6 +50,13 @@ def deleteAddressByPropertyId(property_id: int) -> None:
     execute(query, [property_id])
 
 def deleteImagesByPropertyId(property_id: int) -> None:
+    base_image_dir = os.path.join(os.path.dirname(__file__), '..', 'static', 'images', f'property{property_id}')
+    if os.path.isdir(base_image_dir):
+        for filename in os.listdir(base_image_dir):
+            file_path = os.path.join(base_image_dir, filename)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        os.rmdir(base_image_dir)
     query = 'DELETE FROM property_images WHERE property_id = %s'
     execute(query, [property_id])
 
@@ -72,8 +79,12 @@ def getImagesByPropertyId(property_id: int) -> List[Dict[str, Any]]:
     query = 'SELECT image_url FROM property_images WHERE property_id = %s'
     return fetchAll(query, [property_id])
 
-def addAddress(property_id: int,street_name: int ,street_number:str, city:str) -> None:
+def addAddress(property_id: int,street_name: str ,street_number:int, city:str) -> None:
     query = 'INSERT INTO property_address (street_name,street_number,city,property_id) VALUES (%s, %s, %s, %s)'
+    execute(query,[street_name,street_number,city,property_id])
+
+def updateAddress(property_id: int,street_name: str ,street_number:int, city:str) -> None:
+    query = 'UPDATE property_address SET street_name = %s, street_number = %s,city=%s WHERE property_id = %s'
     execute(query,[street_name,street_number,city,property_id])
 
 def getAddressByPropertyId(property_id: int):
@@ -153,7 +164,7 @@ def getPropertyByOrder(order_by=None) -> list:
     elif order_by == 'date_desc':
         order = 'date_added DESC'
     else:
-        return None  # Orden por defecto
+        return None 
     
     query = f"SELECT * FROM properties ORDER BY {order}"
     return fetchAll(query)
