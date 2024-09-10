@@ -1,7 +1,6 @@
 {% for property in properties %}
 <div class="container">
     <div class="property-card">
-        <!-- Carousel for Property Images -->
         <div id="carousel-{{ property.id }}" class="carousel slide">
             <div class="carousel-inner">
                 {% set images = propertyImages[property.id] %}
@@ -27,7 +26,6 @@
             </button>
         </div>
         <div class="property-details">
-            <!-- Property Address -->
             {% set address = propertyAddress[property.id] %}
             <div class="property-title">
                 {% if address %}

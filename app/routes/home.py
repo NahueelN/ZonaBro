@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,request    
-from ..controllers.propertyController import getAllProperties,getImagesByPropertyId,getAddressByPropertyId,SearchPropertyByAddress,getPropertyByOrder
+from ..controllers.propertyController import getAllProperties,getImagesByPropertyId,getAddressByPropertyId,searchPropertyByAddress,getPropertyByOrder
 
 
 home_bp = Blueprint('home', __name__, url_prefix='/')
@@ -8,7 +8,6 @@ home_bp = Blueprint('home', __name__, url_prefix='/')
 @home_bp.route('/home')
 def home():
     order_by = request.args.get('order')
-    print(order_by)
     if order_by is None:
         properties = getAllProperties()
     else:
@@ -29,7 +28,7 @@ def home():
 @home_bp.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query', '')
-    properties = SearchPropertyByAddress(query)
+    properties = searchPropertyByAddress(query)
     
     context = {
         'properties': properties,

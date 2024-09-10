@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='formulario.css') }}">
     {% endblock %}
     {% block title %}
-    {{ super() }} Registrar
+    {{ super() }} {{ 'Editar Perfil' }}
     {% endblock %}
 </head>
 
@@ -16,7 +16,7 @@
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg border-light">
                 <div class="card-body p-4">
-                    <h1 class="card-title mb-4 text-center">Registrar</h1>
+                    <h1 class="card-title mb-4 text-center">Editar Perfil</h1>
                     {% if form.errors or mensaje %}
                     <div class="alert alert-danger" role="alert">
                         {% if mensaje %}
@@ -41,14 +41,18 @@
                             {{ form.email(class="form-control", placeholder="Ingrese su correo electrónico") }}
                         </div>
                         <div class="mb-3">
+                            {{ form.current_password.label(class="form-label") }}
+                            {{ form.current_password(class="form-control", placeholder="Ingrese su contraseña actual") }}
+                        </div>
+                        <div class="mb-3">
                             {{ form.password.label(class="form-label") }}
-                            {{ form.password(class="form-control", placeholder="Ingrese su contraseña", type="password") }}           
+                            {{ form.password(class="form-control", placeholder="Ingrese su nueva contraseña (opcional)", type="password") }}
                         </div>
                         <div class="mb-3">
                             {{ form.confirm_password.label(class="form-label") }}
-                            {{ form.confirm_password(class="form-control", placeholder="Confirme su contraseña", type="password") }}
+                            {{ form.confirm_password(class="form-control", placeholder="Confirme su nueva contraseña (opcional)", type="password") }}
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                        <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
                     </form>
                 </div>
             </div>

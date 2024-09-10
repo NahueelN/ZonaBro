@@ -13,6 +13,17 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Propiedad en alquiler</h1>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% for category, message in messages %}
+                    {{ message }}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <div class="product-card">
         <div class="image-info-container">
             <div id="carousel-{{ property.id }}" class="carousel slide">
@@ -65,9 +76,6 @@
                     <div class="form-group">
                         <button type="submit">Enviar</button>
                     </div>
-                    {% if message %}
-                        <div class="message">{{ message }}</div>
-                    {% endif %}
                 </form>
             </div>
         </div>
